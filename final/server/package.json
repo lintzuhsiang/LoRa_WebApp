@@ -1,0 +1,36 @@
+{
+    "name": "gps",
+    "title": "gps.js",
+    "version": "0.2.0",
+    "homepage": "https://github.com/infusion/GPS.js",
+    "bugs": "https://github.com/infusion/GPS.js/issues",
+    "description": "A GPS NMEA parser library",
+    "keywords": ["nmea", "gps", "serial", "parser", "distance", "geo", "location", "rmc", "gga", "gll", "gsa", "vtg", "gva"],
+    "author": "Robert Eisele <robert@xarg.org> (http://www.xarg.org/)",
+    "main": "gps",
+    "private": false,
+    "readmeFilename": "README.md",
+    "directories": {
+        "example": "examples"
+    },
+    "license": "MIT OR GPL-2.0",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/infusion/GPS.js.git"
+    },
+    "engines": {
+        "node": "*"
+    },
+    "scripts": {
+        "test": "mocha tests/*.js"
+    },
+    "devDependencies": {
+        "express": "*",
+        "socket.io": "*",
+        "serialport": "*",
+        "angles": "*",
+        "mocha": "*",
+        "chai": "*",
+        "byline": "*"
+    }
+}
