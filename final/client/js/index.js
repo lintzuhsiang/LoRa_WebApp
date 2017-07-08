@@ -1,24 +1,19 @@
-// 當文件都下載完後執行
-$(document).ready(function() {
-    //$("#query").click();
-    
-    $("#get_speed").click(function() {
+$(document).ready(function () {
+
+    $("#get_speed").click(function () {
         $('speedbut').empty();
         console.log('get speed');
-        $.get("http://127.0.0.1:1337/get_speed", function(data, status) {
-  console.log(data.speed);
-  $button = $('<button class="btn btn-primary">').text('speed= '+data.speed);
-  // $('button id="get_speed"').empty();
-  
-  $('speedbut').append($button);
-      })
-      
+        $.get("http://127.0.0.1:1337/get_speed", function (data, status) {
+            console.log(data.speed);
+            $button = $('<button class="btn btn-primary">').text('speed= ' + data.speed);
+            $('speedbut').append($button);
+        })
 
     })
 
-    $("#location").click(function() {
+    $("#location").click(function () {
         console.log('click location');
-        $.get("http://127.0.0.1:1337/get_location", function(data, status) {
+        $.get("http://127.0.0.1:1337/get_location", function (data, status) {
             console.log('location data');
 
             $('markers').empty();
@@ -34,13 +29,10 @@ $(document).ready(function() {
                 })
                 $('markers').append($marker);
             }
+            $("marker").each(function (index) {
 
-            //                $markers = $("#markers").html(
-
-            //var mar = document.getElementById('markers');
-            $("marker").each(function(index) {
-
-                name = $(this).attr("name");
+                //name = $(this).attr("name");
+                name = "Address";
                 address = $(this).attr('address');
                 type = $(this).attr('type');
                 var point = new google.maps.LatLng(
@@ -48,13 +40,13 @@ $(document).ready(function() {
                     parseFloat(this.getAttribute('lng')));
                 var infowincontent = document.createElement('div');
                 var strong = document.createElement('strong');
-                strong.textContent = name
+                strong.textContent = "Address";
                 var infoWindow = new google.maps.InfoWindow;
                 infowincontent.appendChild(strong);
                 infowincontent.appendChild(document.createElement('br'));
-                console.log(parseFloat(this.getAttribute('lng')));
+                //console.log(parseFloat(this.getAttribute('lng')));
                 var text = document.createElement('text');
-                text.textContent = address
+                text.textContent = address;
                 infowincontent.appendChild(text);
                 var icon = customLabel[type] || {};
                 var marker = new google.maps.Marker({
@@ -63,53 +55,17 @@ $(document).ready(function() {
                     label: icon.label,
 
                 });
-                marker.addListener('click', function() {
+                marker.addListener('click', function () {
                     infoWindow.setContent(infowincontent);
                     infoWindow.open(map, marker);
                 });
 
             })
 
-          
-
-            // Create the polyline, passing the symbol in the 'icons' property.
-            // Give the line an opacity of 0.
-            // Repeat the symbol at intervals of 20 pixels to create the dashed effect.
-            var line = new google.maps.Polyline({
-                path: [{ lat: 25.06, lng: 121.5 }, { lat: 25.05, lng: 121.55 }],
-                strokeOpacity: 0,
-                // icon: lineSymbol,
-                icons: [{
-                    icon: lineSymbol,
-                    offset: '50px',
-                    repeat: '30px'
-                }],
-                map: map
-            });
-            // var markerpath = new google.maps.Marker({
-            //     map: map,
-            //     path: 'M 0,-1 0,1',
-            //     //path: '25.05 121.5,25.05 121.55',
-            //     fillColor: 'blue',
-            //     draggable: true,
-            // })
-
         })
     })
 
-    // $tdIndex = $('<td id="index">').text(+i + 1);
-    // $tdName = $('<td id="name">').text(data[i].name);
-    // $tdAddress = $('<td id="address">').text(data[i].address);
-    // $tdLat = $('<td id="lat">').text(data[i].lat);
-    // $tdLng = $('<td id="lng">').text(data[i].lng);
-    // $td = $('<marker>').append($tdIndex)
-    //     .append($tdName)
-    //     .append($tdAddress)
-    //     .append($tdLat)
-    //     .append($tdLng);
-    // $('markers').append($td);
 
-    //$('markers').append('<br>')
 })
 
 
@@ -119,33 +75,28 @@ function downloadurl(data, callback) {
         $address = data[i].address;
         $lat = data[i].lat;
         $lng = data[i].lng;
-        // $type =$('<marker>').append($tdIndex)
-        //         .append($tdName)
-        //         .append($tdPrice)
-        //         .append($tdCount)
-        //         .append($btnUpdate)
-        //         .append($btnDel);
+
     }
 }
-var deleteData = function(id) {
+var deleteData = function (id) {
     // 刪除資料
-    $.get("http://127.0.0.1:1337/delete/" + id, function(data, status) {
+    $.get("http://127.0.0.1:1337/delete/" + id, function (data, status) {
         console.log(data);
         // 對 #query 執行 click
         $('#query').click();
     });
 };
-var updateData = function(iid, $data) {
-    $.post("http://127.0.0.1:1337/update/" + iid, $data, function(data, status) {
+var updateData = function (iid, $data) {
+    $.post("http://127.0.0.1:1337/update/" + iid, $data, function (data, status) {
         //$('#query').click();
         alert('商品更新完成');
     });
 };
 
-$('#query').on('click', function() {
+$('#query').on('click', function () {
     // 查詢資料
     console.log('find data');
-    $.get("http://127.0.0.1:1337/query", function(data, status) {
+    $.get("http://127.0.0.1:1337/query", function (data, status) {
 
         $('tbody').empty();
 
@@ -172,7 +123,7 @@ $('#query').on('click', function() {
             // 將 tr 插入到 tbody
             $('tbody').append($tr);
         }
-        $btnFinish.on('click', function() {
+        $btnFinish.on('click', function () {
             console.log('click finish');
             var iid = $(this).attr('data-id')
             $name = $('#inputName').val();
@@ -186,7 +137,7 @@ $('#query').on('click', function() {
         })
 
 
-        $("[data-id]").on('click', function() {
+        $("[data-id]").on('click', function () {
             var iid = $(this).attr('data-id');
             $btn = $('<button>').text('完成').attr({ 'class': 'btn btn-primary', 'data-id': iid });
             console.log('update click id');
@@ -197,7 +148,7 @@ $('#query').on('click', function() {
             $("button[data-id=" + iid + "]").replaceWith($btn);
         });
 
-        $("[del-id]").on('click', function() {
+        $("[del-id]").on('click', function () {
             var iid = $(this).attr('del-id');
             console.log('delete iid');
             console.log(iid);
@@ -206,7 +157,7 @@ $('#query').on('click', function() {
     });
 
 });
-$('#insert').on('click', function() {
+$('#insert').on('click', function () {
     console.log('click');
     $td_name = $('#InputProductName').val();
     $td_price = $('#InputProductPrice').val();
